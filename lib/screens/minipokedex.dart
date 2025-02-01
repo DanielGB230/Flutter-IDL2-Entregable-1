@@ -1,4 +1,3 @@
-// minipokedex.dart
 import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
 import 'detalle_pokemon.dart'; // Importamos la nueva pantalla
@@ -39,15 +38,23 @@ class _MiniPokedexPageState extends State<MiniPokedexPage> {
       setState(() {
         state = HTTP_STATES.ERROR;
       });
-      
     }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Pokedex")),
+      appBar: _buildAppBar(),
       body: stateController(state, context),
+    );
+  }
+
+  AppBar _buildAppBar() {
+    return AppBar(
+      title: Text("Pokedex", style: TextStyle(fontSize: 22)),
+      centerTitle: true,
+      backgroundColor: Colors.blue[900],
+      elevation: 5,
     );
   }
 
@@ -68,18 +75,24 @@ class _MiniPokedexPageState extends State<MiniPokedexPage> {
     return Container(
       decoration: BoxDecoration(
         gradient: LinearGradient(
+          colors: [Colors.blue.shade800, Colors.purple.shade600],
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
-          colors: [
-            Colors.blue.shade800,
-            Colors.purple.shade600,
-          ],
         ),
       ),
       child: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            Text(
+              '¡HOLA BIENVENIDO!',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontFamily: 'Courier',
+                color: Colors.white,
+                fontSize: 25,
+              ),
+            ),
             Image.asset(
               'assets/images/pokeapi.png', // Reemplaza con la ruta de tu imagen
               width: 200,
@@ -93,18 +106,22 @@ class _MiniPokedexPageState extends State<MiniPokedexPage> {
                 fontSize: 16,
               ),
             ),
-            SizedBox(height: 20), // Espacio adicional antes del indicador
+            SizedBox(height: 20),
             CircularProgressIndicator(
-              valueColor: AlwaysStoppedAnimation<Color>(Colors.white), // Color del indicador en blanco
+              valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
             ),
           ],
         ),
       ),
     );
   }
+
   Widget error(BuildContext context) {
     return Center(
-      child: Text("ERROR!!! NOS VAMOS A MORIR"),
+      child: Text(
+        "ERROR!!! NOS VAMOS A MORIR",
+        style: TextStyle(color: Colors.red, fontSize: 20),
+      ),
     );
   }
 
@@ -116,6 +133,12 @@ class _MiniPokedexPageState extends State<MiniPokedexPage> {
         List<String> strList = (pokemon["url"] as String).split("/");
         String pkmnId = strList[strList.length - 2];
         return Card(
+          elevation: 5,
+          shadowColor: Colors.black45,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(15),
+          ),
+          margin: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
           child: InkWell(
             onTap: () {
               // Navegar a la pantalla de detalles
@@ -128,17 +151,40 @@ class _MiniPokedexPageState extends State<MiniPokedexPage> {
             },
             child: Container(
               padding: EdgeInsets.all(12),
-              height: 120,
+              height: 150,
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [Colors.blue.shade300, Colors.blue.shade600],
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                ),
+                borderRadius: BorderRadius.circular(15),
+              ),
               child: Row(
                 children: [
                   Image.network(
                     "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pkmnId}.png",
-                    width: 120,
+                    width: 100,
                   ),
-                  SizedBox(width: 20),
-                  Text(
-                    pokemon["name"],
-                    style: TextStyle(fontSize: 18),
+                  SizedBox(width: 16),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        pokemon["name"].toUpperCase(),
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
+                      ),
+                      SizedBox(height: 8),
+                      Text(
+                        "ID: #${pkmnId}",
+                        style: TextStyle(color: Colors.white70, fontSize: 16),
+                      ),
+                    ],
                   ),
                 ],
               ),
@@ -149,5 +195,3 @@ class _MiniPokedexPageState extends State<MiniPokedexPage> {
     );
   }
 }
-
-/* funcional */
