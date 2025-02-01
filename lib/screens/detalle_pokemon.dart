@@ -16,16 +16,16 @@ class DetallePokemon extends StatelessWidget {
 
   AppBar _buildAppBar(BuildContext context) {
     return AppBar(
-      title: Text(
+      title: const Text(
         "Detalles del Pokémon",
         style: TextStyle(
           color: Colors.white,
           fontWeight: FontWeight.bold,
         ),
       ),
-      backgroundColor: Colors.blue[900],
+      backgroundColor: Colors.purple[800],
       leading: IconButton(
-        icon: Icon(Icons.arrow_back, color: Colors.white),
+        icon: const Icon(Icons.arrow_back, color: Colors.white),
         onPressed: () => Navigator.pop(context),
       ),
     );
@@ -36,8 +36,8 @@ class DetallePokemon extends StatelessWidget {
       decoration: BoxDecoration(
         gradient: LinearGradient(
           colors: [
-            Colors.blue[700]!,
-            Colors.blue[800]!,
+            Colors.purple[500]!,
+            Colors.blue[500]!,
           ],
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
@@ -47,7 +47,7 @@ class DetallePokemon extends StatelessWidget {
         future: fetchPokemonDetails(pokemonUrl),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(
+            return const Center(
               child: CircularProgressIndicator(
                 valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
               ),
@@ -68,7 +68,7 @@ class DetallePokemon extends StatelessWidget {
     return Center(
       child: Text(
         message,
-        style: TextStyle(color: Colors.white, fontSize: 18),
+        style: const TextStyle(color: Colors.white, fontSize: 18),
       ),
     );
   }
@@ -80,17 +80,17 @@ class DetallePokemon extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           _buildPokemonImage(pokemonDetails["sprites"]["front_default"]),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
           _buildPokemonName(pokemonDetails["name"]),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
           _buildDetailCard("Altura", pokemonDetails["height"].toString()),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
           _buildDetailCard("Peso", pokemonDetails["weight"].toString()),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
           _buildTypes(pokemonDetails["types"]),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
           _buildAbilities(pokemonDetails["abilities"]),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
           _buildStats(pokemonDetails["stats"]),
         ],
       ),
@@ -103,7 +103,7 @@ class DetallePokemon extends StatelessWidget {
         color: Colors.blueGrey[800]!.withOpacity(0.5),
         borderRadius: BorderRadius.circular(20),
       ),
-      padding: EdgeInsets.all(16),
+      padding: const EdgeInsets.all(16),
       child: Image.network(
         imageUrl,
         width: 300,
@@ -116,7 +116,7 @@ class DetallePokemon extends StatelessWidget {
   Widget _buildPokemonName(String name) {
     return Text(
       name.toUpperCase(),
-      style: TextStyle(
+      style: const TextStyle(
         color: Colors.white,
         fontSize: 28,
         fontWeight: FontWeight.bold,
@@ -127,7 +127,7 @@ class DetallePokemon extends StatelessWidget {
   Widget _buildDetailCard(String title, String value) {
     return Container(
       width: double.infinity,
-      padding: EdgeInsets.all(16),
+      padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: Colors.blueGrey[800]!.withOpacity(0.5),
         borderRadius: BorderRadius.circular(20),
@@ -137,7 +137,7 @@ class DetallePokemon extends StatelessWidget {
         children: [
           Text(
             "$title: $value",
-            style: TextStyle(color: Colors.white, fontSize: 18),
+            style: const TextStyle(color: Colors.white, fontSize: 18),
           ),
         ],
       ),
@@ -147,7 +147,7 @@ class DetallePokemon extends StatelessWidget {
   Widget _buildTypes(List<dynamic> types) {
     return Container(
       width: double.infinity,
-      padding: EdgeInsets.all(16),
+      padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: Colors.blueGrey[800]!.withOpacity(0.5),
         borderRadius: BorderRadius.circular(20),
@@ -155,7 +155,7 @@ class DetallePokemon extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
+          const Text(
             "Tipos:",
             style: TextStyle(
               color: Colors.white,
@@ -163,13 +163,13 @@ class DetallePokemon extends StatelessWidget {
               fontWeight: FontWeight.bold,
             ),
           ),
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
           ...types.map<Widget>((type) {
             return Padding(
               padding: const EdgeInsets.symmetric(vertical: 4),
               child: Text(
                 "- ${type["type"]["name"]}",
-                style: TextStyle(color: Colors.white, fontSize: 16),
+                style: const TextStyle(color: Colors.white, fontSize: 16),
               ),
             );
           }).toList(),
@@ -181,7 +181,7 @@ class DetallePokemon extends StatelessWidget {
   Widget _buildAbilities(List<dynamic> abilities) {
     return Container(
       width: double.infinity,
-      padding: EdgeInsets.all(16),
+      padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: Colors.blueGrey[800]!.withOpacity(0.5),
         borderRadius: BorderRadius.circular(20),
@@ -189,7 +189,7 @@ class DetallePokemon extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
+          const Text(
             "Habilidades:",
             style: TextStyle(
               color: Colors.white,
@@ -197,13 +197,13 @@ class DetallePokemon extends StatelessWidget {
               fontWeight: FontWeight.bold,
             ),
           ),
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
           ...abilities.map<Widget>((ability) {
             return Padding(
               padding: const EdgeInsets.symmetric(vertical: 4),
               child: Text(
                 "- ${ability["ability"]["name"]}",
-                style: TextStyle(color: Colors.white, fontSize: 16),
+                style: const TextStyle(color: Colors.white, fontSize: 16),
               ),
             );
           }).toList(),
@@ -215,7 +215,7 @@ class DetallePokemon extends StatelessWidget {
   Widget _buildStats(List<dynamic> stats) {
     return Container(
       width: double.infinity,
-      padding: EdgeInsets.all(16),
+      padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: Colors.blueGrey[800]!.withOpacity(0.5),
         borderRadius: BorderRadius.circular(20),
@@ -223,7 +223,7 @@ class DetallePokemon extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
+          const Text(
             "Estadísticas:",
             style: TextStyle(
               color: Colors.white,
@@ -231,13 +231,13 @@ class DetallePokemon extends StatelessWidget {
               fontWeight: FontWeight.bold,
             ),
           ),
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
           ...stats.map<Widget>((stat) {
             return Padding(
               padding: const EdgeInsets.symmetric(vertical: 4),
               child: Text(
                 "${stat["stat"]["name"]}: ${stat["base_stat"]}",
-                style: TextStyle(color: Colors.white, fontSize: 16),
+                style: const TextStyle(color: Colors.white, fontSize: 16),
               ),
             );
           }).toList(),

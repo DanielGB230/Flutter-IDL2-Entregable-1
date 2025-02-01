@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
-import 'detalle_pokemon.dart'; // Importamos la nueva pantalla
+import 'detalle_pokemon.dart';
 
 enum HTTP_STATES { INITIAL, LOADING, ERROR, SUCCESS }
 
@@ -29,7 +29,7 @@ class _MiniPokedexPageState extends State<MiniPokedexPage> {
       for (dynamic el in response.data["results"]) {
         pkmnsTmp.add(el);
       }
-      await Future.delayed(Duration(seconds: 3)); // Simular carga
+      await Future.delayed(const Duration(seconds: 3)); // carga
       setState(() {
         pkmns = pkmnsTmp;
         state = HTTP_STATES.SUCCESS;
@@ -51,10 +51,13 @@ class _MiniPokedexPageState extends State<MiniPokedexPage> {
 
   AppBar _buildAppBar() {
     return AppBar(
-      title: Text("Pokedex", style: TextStyle(fontSize: 22)),
+      title: const Text("Pokedex", style: TextStyle(fontSize: 22, color: Colors.white, fontWeight: FontWeight.bold)),
       centerTitle: true,
-      backgroundColor: Colors.blue[900],
-      elevation: 5,
+      backgroundColor: Colors.deepPurple[800],
+      elevation: 4,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(bottom: Radius.circular(0)),
+      ),
     );
   }
 
@@ -84,30 +87,30 @@ class _MiniPokedexPageState extends State<MiniPokedexPage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(
+            const Text(
               '¡HOLA BIENVENIDO!',
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontFamily: 'Courier',
                 color: Colors.white,
-                fontSize: 25,
+                fontSize: 28,
               ),
             ),
             Image.asset(
-              'assets/images/pokeapi.png', // Reemplaza con la ruta de tu imagen
-              width: 200,
-              height: 200,
+              'assets/images/pokeapi.png', 
+              width: 180,
+              height: 180,
             ),
-            SizedBox(height: 16),
-            Text(
-              'Espera mientras cargamos los recursos',
+            const SizedBox(height: 16),
+            const Text(
+              'Espera mientras cargamos los recursos...',
               style: TextStyle(
-                color: Colors.white,
-                fontSize: 16,
+                color: Colors.white70,
+                fontSize: 18,
               ),
             ),
-            SizedBox(height: 20),
-            CircularProgressIndicator(
+            const SizedBox(height: 20),
+            const CircularProgressIndicator(
               valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
             ),
           ],
@@ -117,10 +120,10 @@ class _MiniPokedexPageState extends State<MiniPokedexPage> {
   }
 
   Widget error(BuildContext context) {
-    return Center(
+    return const Center(
       child: Text(
-        "ERROR!!! NOS VAMOS A MORIR",
-        style: TextStyle(color: Colors.red, fontSize: 20),
+        "¡Vaya! Algo salió mal.",
+        style: TextStyle(color: Colors.red, fontSize: 20, fontWeight: FontWeight.bold),
       ),
     );
   }
@@ -136,12 +139,11 @@ class _MiniPokedexPageState extends State<MiniPokedexPage> {
           elevation: 5,
           shadowColor: Colors.black45,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(15),
+            borderRadius: BorderRadius.circular(20),
           ),
-          margin: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+          margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
           child: InkWell(
             onTap: () {
-              // Navegar a la pantalla de detalles
               Navigator.push(
                 context,
                 MaterialPageRoute(
@@ -150,39 +152,40 @@ class _MiniPokedexPageState extends State<MiniPokedexPage> {
               );
             },
             child: Container(
-              padding: EdgeInsets.all(12),
-              height: 150,
+              padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
                 gradient: LinearGradient(
                   colors: [Colors.blue.shade300, Colors.blue.shade600],
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
                 ),
-                borderRadius: BorderRadius.circular(15),
+                borderRadius: BorderRadius.circular(20),
               ),
               child: Row(
                 children: [
                   Image.network(
-                    "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pkmnId}.png",
-                    width: 100,
+                    "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/$pkmnId.png",
+                    width: 120,
+                    height: 120,
+                    fit: BoxFit.contain,
                   ),
-                  SizedBox(width: 16),
+                  const SizedBox(width: 20),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
                         pokemon["name"].toUpperCase(),
-                        style: TextStyle(
-                          fontSize: 20,
+                        style: const TextStyle(
+                          fontSize: 22,
                           fontWeight: FontWeight.bold,
                           color: Colors.white,
                         ),
                       ),
-                      SizedBox(height: 8),
+                      const SizedBox(height: 8),
                       Text(
-                        "ID: #${pkmnId}",
-                        style: TextStyle(color: Colors.white70, fontSize: 16),
+                        "ID: #$pkmnId",
+                        style: const TextStyle(color: Colors.white70, fontSize: 16),
                       ),
                     ],
                   ),
